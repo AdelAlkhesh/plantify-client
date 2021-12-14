@@ -38,8 +38,6 @@ export default function App() {
     getData();
   }, []);
 
-
-
   const handleSignin = async (e) => {
     e.preventDefault();
     try {
@@ -53,7 +51,7 @@ export default function App() {
       });
       setUser(response.data);
       console.log(user);
-      navigate("/");
+      navigate("/profile");
     } catch (err) {
       console.log(err.response.data.error);
       setError(err.response.data.error);
@@ -85,7 +83,10 @@ export default function App() {
           element={<SignIn handleSignin={handleSignin} error={error} />}
         />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/profile" element={<Profile plantFamily={plantFamily} />} />
+        <Route
+          path="/profile"
+          element={<Profile plantFamily={plantFamily} />}
+        />
         <Route
           path="/addplant"
           element={<AddPlant handleSubmit={handleSubmit} />}
