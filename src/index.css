@@ -5,9 +5,136 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(161, 188, 209);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.container1 {
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 20px;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  background-color: rgb(223, 223, 223);
+}
+
+.mainContainer{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 40px;
+  width: 600px;
+}
+
+.contentButton{
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid black;
+}
+
+
+.addlink{
+  text-decoration: none;
+  color: white; 
+
+}
+
+.detailsPage {
+  display: flex;
+  justify-content: center;
+}
+
+.detailsCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid black;
+  margin: 100px;
+  height: 500px;
+  padding: 20px;
+  width: 500px;
+  background-color: rgb(223, 223, 223) ;
+}
+
+.detailsButtons {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  
+}
+
+
+.plantName {
+  text-decoration: None;
+  color: black; 
+  font-size: 22px;
+  
+}
+
+.plantName:hover {
+  text-decoration: underline;
+}
+
+
+.logoutButton {
+  padding: 10px;
+  background-color: rgb(109, 175, 166);
+  border-radius: 10px;
+  margin:0;
+  color: white;
+  font-size: 15px;
+}
+
+
+.profile {
+  display: flex;
+  justify-content: center;
+ 
+  
+}
+
+.logoutButtondiv{
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+}
+
+
+
+.profilelink {
+  text-decoration: none;
+  color: rgb(196, 218, 233);
+  font-size: 45px;
+  margin-top: 20px;
+}
+
+
+.navButtons {
+ background-image: url('https://cdn.vox-cdn.com/thumbor/1H18qJEb9QKk_D7lCq0M1sXnpJ4=/0x0:5758x3839/1200x800/filters:focal(2419x1460:3339x2380)/cdn.vox-cdn.com/uploads/chorus_image/image/64715391/GettyImages_1014272482.0.jpg');
+ height: 100px;
+}
+
+
+

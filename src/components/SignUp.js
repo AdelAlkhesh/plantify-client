@@ -6,27 +6,33 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-// import {Container, Typography, Box} from '@mui/material'
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../config";
+import { useContext } from 'react'
+import { UserContext } from "../context/app.context";
 
 const theme = createTheme();
 
 function SignUp(props) {
   const navigate = useNavigate();
+  const {error, setError} = useContext(UserContext)
 
   const handleSignUp = async (event) => {
     event.preventDefault();
-    let newUser = {
-      username: event.target.username.value,
-      email: event.target.email.value,
-      password: event.target.password.value,
-    };
-    //Don't forget to import axios
-    await axios.post(`${API_URL}/signup`, newUser, { withCredentials: true });
-    navigate("/signin");
+    try {
+      let newUser = {
+        username: event.target.username.value,
+        email: event.target.email.value,
+        password: event.target.password.value,
+      };
+      //Don't forget to import axios
+      await axios.post(`${API_URL}/signup`, newUser, { withCredentials: true });
+      navigate("/signin");
+    } catch (err) {
+      setError(err.response.data.errorMessage);
+    }
   };
 
   return (
@@ -77,6 +83,8 @@ function SignUp(props) {
               type="password"
               id="password"
               autoComplete="current-password"
+              helperText={error ? error : ""}
+              error={error ? true : false}
             />
             <Button
               type="submit"

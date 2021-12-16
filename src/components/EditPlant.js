@@ -1,3 +1,8 @@
+import { useState, useEffect } from "react";
+import { useParams} from "react-router-dom";
+import { Spinner } from "react-bootstrap";
+import axios from "axios";
+import { API_URL } from "../config";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -9,8 +14,28 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme();
 
-function AddPlant(props) {
-  const { handleSubmit } = props;
+export default function EditPlant(props) {
+  const { plantId } = useParams();
+  const [plantDetail, setPlantDetail] = useState(null);
+  const { handleEditPlant } = props;
+
+  // This will run just ONCE after the component has mounted
+  useEffect(() => {
+      const getData = async () => {
+       
+      // Fetching info for a single todo
+      let response = await axios.get(`${API_URL}/plantFamily/${plantId}`, {
+        withCredentials: true,
+      });
+        setPlantDetail(response.data);
+        console.log(plantDetail)
+    };
+    getData();
+  }, []);
+
+  if (!plantDetail) {
+    return <Spinner animation="grow" variant="dark" />;
+  }
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -28,7 +53,9 @@ function AddPlant(props) {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={(event) => {
+              handleEditPlant(event, plantDetail._id);
+            }}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -39,6 +66,7 @@ function AddPlant(props) {
               id="outlined-basic"
               label="Nickname"
               name="nickname"
+              defaultValue={plantDetail.nickname}
               autoFocus
             />
             <TextField
@@ -46,6 +74,7 @@ function AddPlant(props) {
               fullWidth
               name="scientific_name"
               label="Scientific Name"
+              defaultValue={plantDetail.scientific_name}
               id="outlined-basic"
             />
             <TextField
@@ -53,6 +82,7 @@ function AddPlant(props) {
               fullWidth
               name="price"
               label="Price"
+              defaultValue={plantDetail.price}
               id="outlined-basic"
               type="number"
             />
@@ -61,9 +91,11 @@ function AddPlant(props) {
               fullWidth
               name="details"
               label="Care Routine/Details"
+              defaultValue={plantDetail.details}
               id="outlined-basic"
               multiline
-              rows={4}c
+              rows={4}
+              c
             />
             <Button
               type="submit"
@@ -82,5 +114,3 @@ function AddPlant(props) {
     </ThemeProvider>
   );
 }
-
-export default AddPlant;

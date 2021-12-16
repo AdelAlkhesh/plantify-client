@@ -11,12 +11,22 @@ function MyNav(props) {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           {user ? (
-            <>
-              <button onClick={props.handleLogout}>Logout</button>
-              <Link style={{ marginLeft: "10px" }} to="/profile">
-                Profile
-              </Link>
-            </>
+            <div className="navButtons">
+              <div className="profile">
+                <Link
+                  className="profilelink"
+                  style={{ marginLeft: "10px" }}
+                  to="/profile"
+                >
+                  Profile
+                </Link>
+              </div>
+              <div className="logoutButtondiv">
+                <button className="logoutButton" onClick={props.handleLogout}>
+                  Logout
+                </button>
+              </div>
+            </div>
           ) : (
             <>
               <Link style={{ marginLeft: "10px" }} to="/signin">

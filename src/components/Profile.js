@@ -1,17 +1,40 @@
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../context/app.context";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import PlantList from "./PlantList";
-import BlogList from "./BlogList";
+import UserBlogs from "./UserBlogs";
+import axios from 'axios'
 
-export default function Profile(props) {
-  const { plantFamily } = props;
-  const { user } = useContext(UserContext);
+
+export default function Profile() {
+  const { user, plantFamily, blogs } = useContext(UserContext);
   const [showPlants, setShowplants] = useState(false);
 
-  useEffect(() => {}, [user, plantFamily]);
+
+
+
+
+
+
+
+
+  useEffect(() => {
+    const userPlants = plantFamily.filter((ele) => {
+      return ele.author === user._id;
+    });
+
+    const userBlogs = blogs.filter((ele) => {
+      return ele.author === user._id;
+    });
+  }, [user, plantFamily, blogs]);
+
+
 
   const userPlants = plantFamily.filter((ele) => {
+    return ele.author === user._id;
+  });
+
+  const userBlogs = blogs.filter((ele) => {
     return ele.author === user._id;
   });
 
@@ -22,7 +45,7 @@ export default function Profile(props) {
   const handlePlants = () => {
     setShowplants(true);
   };
-
+ 
   if (!user) {
     return <Navigate to="/signin" />;
   }
@@ -30,9 +53,24 @@ export default function Profile(props) {
   return (
     <div>
       <div className="tabs">
-        <button onClick={handlePlants}>Plants</button>
-        <button onClick={handleBlogs}>Blogs</button>
-        {showPlants ? <PlantList userPlants={userPlants} /> : <BlogList />}
+      
+        <div className="profilecontent">
+          <div className="buttons">
+            <button className="contentButton" onClick={handlePlants}>
+              Plants
+            </button>
+            <button className="contentButton" onClick={handleBlogs}>
+              Diary
+            </button>
+          </div>
+          <div className="cards">
+            {showPlants ? (
+              <PlantList userPlants={userPlants} />
+            ) : (
+              <UserBlogs userBlogs={userBlogs} />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

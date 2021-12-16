@@ -1,3 +1,8 @@
+import { useState, useEffect } from "react";
+import { useParams} from "react-router-dom";
+import { Spinner } from "react-bootstrap";
+import axios from "axios";
+import { API_URL } from "../config";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -8,9 +13,28 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme();
+export default function EditBlog(props) {
+  const { blogId } = useParams();
+  const [blogDetail, setblogDetail] = useState(null);
+  const { handleEditBlog } = props;
 
-function AddPlant(props) {
-  const { handleSubmit } = props;
+  // This will run just ONCE after the component has mounted
+  useEffect(() => {
+    const getData = async () => {
+      // Fetching info for a single todo
+      let response = await axios.get(`${API_URL}/blogs/${blogId}`, {
+        withCredentials: true,
+      });
+      setblogDetail(response.data);
+      console.log(blogDetail)
+    };
+    getData();
+  }, []);
+
+  if (!blogDetail) {
+    return <Spinner animation="grow" variant="dark" />;
+  }
+ 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -24,11 +48,13 @@ function AddPlant(props) {
           }}
         >
           <Typography component="h1" variant="h5">
-            Add a plant
+            Edit
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={(event) => {
+              handleEditBlog(event, blogDetail._id);
+            }}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -37,34 +63,31 @@ function AddPlant(props) {
               required
               fullWidth
               id="outlined-basic"
-              label="Nickname"
-              name="nickname"
+              label="Title"
+              name="title"
+              defaultValue={blogDetail.title}
               autoFocus
             />
             <TextField
               margin="normal"
               fullWidth
-              name="scientific_name"
-              label="Scientific Name"
-              id="outlined-basic"
-            />
-            <TextField
-              margin="normal"
-              fullWidth
-              name="price"
-              label="Price"
-              id="outlined-basic"
-              type="number"
-            />
-            <TextField
-              margin="normal"
-              fullWidth
-              name="details"
-              label="Care Routine/Details"
-              id="outlined-basic"
+              name="body"
+              label="Body"
+              defaultValue={blogDetail.body}
               multiline
-              rows={4}c
+              rows={4}
+              id="outlined-basic"
             />
+
+            <TextField
+              margin="normal"
+              fullWidth
+              name="tags"
+              label="Tags"
+              defaultValue={blogDetail.tags}
+              id="outlined-basic"
+            />
+
             <Button
               type="submit"
               fullWidth
@@ -82,5 +105,3 @@ function AddPlant(props) {
     </ThemeProvider>
   );
 }
-
-export default AddPlant;

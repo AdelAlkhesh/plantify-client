@@ -1,6 +1,4 @@
 import * as React from "react";
-
-import { UserContext } from "../context/app.context";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -32,7 +30,12 @@ function SignIn(props) {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSignin} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSignin}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -42,6 +45,7 @@ function SignIn(props) {
               name="email"
               autoComplete="email"
               autoFocus
+              
             />
             <TextField
               margin="normal"
